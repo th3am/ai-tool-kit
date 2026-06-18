@@ -1,0 +1,1928 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "EduAI Platform API",
+        "description": "API Documentation for EduAI Platform",
+        "contact": {
+            "email": "support@eduai.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/",
+            "description": "Primary API Server"
+        }
+    ],
+    "paths": {
+        "/api/v1/tools/animation": {
+            "post": {
+                "tags": [
+                    "4. Tools"
+                ],
+                "summary": "Generate Video Animation",
+                "operationId": "452841134acfa845f84d6a1cb55dbcfa",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "session_id",
+                                    "prompt"
+                                ],
+                                "properties": {
+                                    "session_id": {
+                                        "type": "integer"
+                                    },
+                                    "prompt": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Job Accepted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Job started"
+                                        },
+                                        "job_id": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/tools/audio": {
+            "post": {
+                "tags": [
+                    "4. Tools"
+                ],
+                "summary": "Generate Audio Narration",
+                "operationId": "78d7db3f00f459fec5a69d34247796aa",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "session_id",
+                                    "text"
+                                ],
+                                "properties": {
+                                    "session_id": {
+                                        "type": "integer"
+                                    },
+                                    "text": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Job Accepted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Job started"
+                                        },
+                                        "job_id": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/sanctum/csrf-cookie": {
+            "get": {
+                "tags": [
+                    "1. Auth"
+                ],
+                "summary": "CSRF Handshake",
+                "description": "Initialize the CSRF protection cookie. Call this first before Login.",
+                "operationId": "f98f0a127045925ce7311e836ac67850",
+                "responses": {
+                    "204": {
+                        "description": "Cookie Set",
+                        "headers": {
+                            "Set-Cookie": {
+                                "description": "XSRF-TOKEN cookie",
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/login": {
+            "post": {
+                "tags": [
+                    "1. Auth"
+                ],
+                "summary": "Login (Session)",
+                "description": "Authenticate user. Requires XSRF-TOKEN header from the handshake.",
+                "operationId": "bae68d1c55329ecb6e41f48285840c8f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login Successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Login successful"
+                                        },
+                                        "user": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/v1/register": {
+            "post": {
+                "tags": [
+                    "1. Auth"
+                ],
+                "summary": "Register",
+                "description": "Create a new user account and receive an auth token.",
+                "operationId": "ad77fe138bcb384ad65d167d5c8d1cc0",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Ahmed"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "ahmed@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Registered Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Registration successful"
+                                        },
+                                        "user": {
+                                            "type": "object"
+                                        },
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error"
+                    }
+                }
+            }
+        },
+        "/api/v1/logout": {
+            "post": {
+                "tags": [
+                    "1. Auth"
+                ],
+                "summary": "Logout",
+                "description": "Invalidate current session",
+                "operationId": "c5cdd87fdbf9d0f95dede875bd023dec",
+                "responses": {
+                    "200": {
+                        "description": "Logged out"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/sessions": {
+            "get": {
+                "tags": [
+                    "V1 Chat Sessions"
+                ],
+                "summary": "List Sessions",
+                "operationId": "8939b069336f89c8b49530fbb01bc0f7",
+                "responses": {
+                    "200": {
+                        "description": "List of user sessions",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "V1 Chat Sessions"
+                ],
+                "summary": "Create Session",
+                "operationId": "eb8517b24762b50e3b69d568a09b30b1",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "My Presentation Project"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Session Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/guest/tools/animation": {
+            "post": {
+                "tags": [
+                    "7. Guest Tools"
+                ],
+                "summary": "[Guest] Generate SVG Animation",
+                "description": "Generate an animated SVG from a prompt. No authentication required. **Limit: 2 per day per IP.** Returns the SVG content directly (synchronous).",
+                "operationId": "f21491a48b1dcaad0626cee93ee684b2",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "prompt"
+                                ],
+                                "properties": {
+                                    "prompt": {
+                                        "type": "string",
+                                        "maxLength": 500,
+                                        "example": "A rocket flying through a starry night sky"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Animation generated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Animation generated successfully."
+                                        },
+                                        "guest_limit": {
+                                            "properties": {
+                                                "daily_limit": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "register_for_more": {
+                                                    "type": "string",
+                                                    "example": "https://example.com/register"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "svg": {
+                                            "description": "Full SVG XML content ready to embed in HTML",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "429": {
+                        "description": "Daily limit reached — register for unlimited access"
+                    }
+                }
+            }
+        },
+        "/api/v1/guest/tools/audio": {
+            "post": {
+                "tags": [
+                    "7. Guest Tools"
+                ],
+                "summary": "[Guest] Generate Audio Narration",
+                "description": "Generate audio narration from text. No authentication required. **Limit: 2 per day per IP. Max 500 characters.** Processing is async — poll `GET /api/v1/guest/jobs/{job_id}`.",
+                "operationId": "a1a9cc649a73b2c6e16a665cd8fb7522",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "text"
+                                ],
+                                "properties": {
+                                    "text": {
+                                        "type": "string",
+                                        "maxLength": 500,
+                                        "example": "Welcome to EduAI. This platform uses artificial intelligence to help students and teachers create educational content instantly."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Job accepted — poll for result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Audio job started. Poll the job status endpoint."
+                                        },
+                                        "job_id": {
+                                            "type": "integer",
+                                            "example": 43
+                                        },
+                                        "poll_url": {
+                                            "type": "string",
+                                            "example": "https://example.com/api/v1/guest/jobs/43"
+                                        },
+                                        "guest_limit": {
+                                            "properties": {
+                                                "max_chars": {
+                                                    "type": "integer",
+                                                    "example": 500
+                                                },
+                                                "daily_limit": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "register_for_more": {
+                                                    "type": "string",
+                                                    "example": "https://example.com/register"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "429": {
+                        "description": "Daily limit reached — register for unlimited access"
+                    }
+                }
+            }
+        },
+        "/api/v1/guest/jobs/{id}": {
+            "get": {
+                "tags": [
+                    "7. Guest Tools"
+                ],
+                "summary": "[Guest] Poll job status",
+                "description": "Poll the status of an async guest job (Presentation or Audio). No authentication required. Only works for guest jobs (user_id is null). Poll every 3–5 seconds until status is `succeeded` or `failed`.",
+                "operationId": "ab13f0511229591febf7cf811c4c0f86",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Job ID returned from a tool creation endpoint",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Job status",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "job_id": {
+                                            "type": "integer",
+                                            "example": 42
+                                        },
+                                        "tool_type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "presentation",
+                                                "audio",
+                                                "video-animation"
+                                            ],
+                                            "example": "presentation"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "enum": [
+                                                "queued",
+                                                "running",
+                                                "succeeded",
+                                                "failed"
+                                            ],
+                                            "example": "succeeded"
+                                        },
+                                        "result": {
+                                            "description": "The generated result (present when status=succeeded)",
+                                            "type": "object",
+                                            "nullable": true
+                                        },
+                                        "error_message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Job not found or not a guest job"
+                    }
+                }
+            }
+        },
+        "/api/v1/guest/tools/mindmap": {
+            "post": {
+                "tags": [
+                    "7. Guest Tools"
+                ],
+                "summary": "[Guest] Generate Mind Map",
+                "description": "Generate a Markdown mind map from a topic. No authentication required. **Limit: 3 per day per IP.** Result is returned immediately (synchronous).",
+                "operationId": "45b632fcf691db80e7f5f9a151793645",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "topic"
+                                ],
+                                "properties": {
+                                    "topic": {
+                                        "type": "string",
+                                        "maxLength": 500,
+                                        "example": "Artificial Intelligence in Education"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Mind map generated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Mind map generated successfully."
+                                        },
+                                        "guest_limit": {
+                                            "properties": {
+                                                "daily_limit": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "register_for_more": {
+                                                    "type": "string",
+                                                    "example": "https://example.com/register"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "result": {
+                                            "description": "Markmap-compatible Markdown",
+                                            "type": "string",
+                                            "example": "# AI in Education\\n- Benefits\\n  - Personalized learning\\n- Challenges"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "429": {
+                        "description": "Daily limit reached — register for unlimited access"
+                    }
+                }
+            }
+        },
+        "/api/v1/guest/tools/presentation": {
+            "post": {
+                "tags": [
+                    "7. Guest Tools"
+                ],
+                "summary": "[Guest] Generate Presentation",
+                "description": "Start generating a presentation. No authentication required. **Limit: 2 per day per IP. Max 3 slides.** Processing is async — poll `GET /api/v1/guest/jobs/{job_id}` until status is `succeeded`.",
+                "operationId": "c8ae7e788b7312ddbc4f9167249029fd",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "topic"
+                                ],
+                                "properties": {
+                                    "topic": {
+                                        "type": "string",
+                                        "maxLength": 300,
+                                        "example": "The Role of AI in Modern Education"
+                                    },
+                                    "style": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Modern",
+                                            "Professional",
+                                            "Creative",
+                                            "Minimalist"
+                                        ],
+                                        "example": "Modern"
+                                    },
+                                    "slide_count": {
+                                        "description": "Capped at 3 for guest users",
+                                        "type": "integer",
+                                        "maximum": 3,
+                                        "minimum": 1,
+                                        "example": 3
+                                    },
+                                    "instructions": {
+                                        "type": "string",
+                                        "example": "Keep it simple and visual"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Job accepted — poll for result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Presentation job started. Poll the job status endpoint."
+                                        },
+                                        "job_id": {
+                                            "type": "integer",
+                                            "example": 42
+                                        },
+                                        "poll_url": {
+                                            "type": "string",
+                                            "example": "https://example.com/api/v1/guest/jobs/42"
+                                        },
+                                        "guest_limit": {
+                                            "properties": {
+                                                "max_slides": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "daily_limit": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "register_for_more": {
+                                                    "type": "string",
+                                                    "example": "https://example.com/register"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "429": {
+                        "description": "Daily limit reached — register for unlimited access"
+                    }
+                }
+            }
+        },
+        "/api/v1/guest/tools/quiz": {
+            "post": {
+                "tags": [
+                    "7. Guest Tools"
+                ],
+                "summary": "[Guest] Generate Quiz",
+                "description": "Generate a quiz from raw text. No authentication required. **Limit: 3 per day per IP. Max 3 questions per request.**",
+                "operationId": "838917eff827dc6f276a14c990628e92",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "text"
+                                ],
+                                "properties": {
+                                    "text": {
+                                        "type": "string",
+                                        "minLength": 50,
+                                        "example": "Binary search is an algorithm that finds the position of a target value within a sorted array..."
+                                    },
+                                    "max_questions": {
+                                        "description": "Capped at 3 for guest users",
+                                        "type": "integer",
+                                        "maximum": 3,
+                                        "minimum": 1,
+                                        "example": 3
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "My Quiz"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Quiz generated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Quiz generated successfully."
+                                        },
+                                        "guest_limit": {
+                                            "properties": {
+                                                "max_questions": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "daily_limit": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "register_for_more": {
+                                                    "type": "string",
+                                                    "example": "https://example.com/register"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "quiz": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "My Quiz"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "done"
+                                                },
+                                                "questions": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "question_text": {
+                                                                "type": "string",
+                                                                "example": "What is binary search?"
+                                                            },
+                                                            "all_options": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "429": {
+                        "description": "Daily limit reached — register for unlimited access"
+                    }
+                }
+            }
+        },
+        "/api/v1/tools/mindmap": {
+            "post": {
+                "tags": [
+                    "4. Tools"
+                ],
+                "summary": "Generate Mind Map",
+                "operationId": "a9f83587569f2e71df0b86117a00eb17",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "session_id",
+                                    "topic"
+                                ],
+                                "properties": {
+                                    "session_id": {
+                                        "type": "integer"
+                                    },
+                                    "topic": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Generation Complete",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "job_id": {
+                                            "type": "integer"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "succeeded"
+                                        },
+                                        "result": {
+                                            "description": "Markdown content",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/tools/presentation": {
+            "post": {
+                "tags": [
+                    "4. Tools"
+                ],
+                "summary": "Generate Presentation",
+                "description": "Starts a background job to generate a presentation",
+                "operationId": "c09c684588b941dc8f7e026de7737112",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "session_id",
+                                    "topic"
+                                ],
+                                "properties": {
+                                    "session_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "topic": {
+                                        "type": "string",
+                                        "example": "The utility of AI in Education"
+                                    },
+                                    "style": {
+                                        "type": "string",
+                                        "example": "Modern"
+                                    },
+                                    "slide_count": {
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "instructions": {
+                                        "type": "string",
+                                        "example": "Include images"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Job Accepted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Job started"
+                                        },
+                                        "job_id": {
+                                            "description": "Use this ID to check status",
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/public/quiz/{uuid}": {
+            "get": {
+                "tags": [
+                    "6. Public Quiz"
+                ],
+                "summary": "Get a public quiz",
+                "description": "Returns quiz info and shuffled options. Correct answers are NOT included.",
+                "operationId": "4d7666d291d8d67aa390d215ee239190",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "Quiz share UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Quiz with questions"
+                    },
+                    "404": {
+                        "description": "Not found or not public"
+                    }
+                }
+            }
+        },
+        "/api/v1/public/quiz/{uuid}/attempt": {
+            "post": {
+                "tags": [
+                    "6. Public Quiz"
+                ],
+                "summary": "Submit a public quiz attempt",
+                "description": "Submit answers for a public quiz without needing to log in. Returns score immediately.",
+                "operationId": "af24684890a1c31e7710c6eb4604895f",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "Quiz share UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "answers"
+                                ],
+                                "properties": {
+                                    "participant_name": {
+                                        "type": "string",
+                                        "example": "Ahmed"
+                                    },
+                                    "answers": {
+                                        "description": "Map of question_id to selected answer",
+                                        "type": "object",
+                                        "example": {
+                                            "12": "binary search",
+                                            "13": "datasets"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Score result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "score": {
+                                            "type": "integer",
+                                            "example": 3
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "example": 5
+                                        },
+                                        "percentage": {
+                                            "type": "integer",
+                                            "example": 60
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You scored 3 out of 5!"
+                                        },
+                                        "results": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "question_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "submitted_answer": {
+                                                        "type": "string",
+                                                        "example": "binary search"
+                                                    },
+                                                    "correct_answer": {
+                                                        "type": "string",
+                                                        "example": "binary search"
+                                                    },
+                                                    "is_correct": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/quiz": {
+            "get": {
+                "tags": [
+                    "5. Quiz"
+                ],
+                "summary": "List my quizzes",
+                "description": "Returns all quizzes created by the authenticated user.",
+                "operationId": "233de901c5d0a896149b060efb89de74",
+                "responses": {
+                    "200": {
+                        "description": "List of quizzes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Chapter 3 Quiz"
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "pending",
+                                                            "processing",
+                                                            "done",
+                                                            "failed"
+                                                        ],
+                                                        "example": "done"
+                                                    },
+                                                    "is_public": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "share_url": {
+                                                        "type": "string",
+                                                        "example": "https://example.com/quiz/public/uuid"
+                                                    },
+                                                    "questions_count": {
+                                                        "type": "integer",
+                                                        "example": 5
+                                                    },
+                                                    "attempts_count": {
+                                                        "type": "integer",
+                                                        "example": 12
+                                                    },
+                                                    "source_type": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "text",
+                                                            "pdf",
+                                                            "docx",
+                                                            "pptx"
+                                                        ],
+                                                        "example": "pdf"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "5. Quiz"
+                ],
+                "summary": "Create a quiz",
+                "description": "Create a quiz from raw text or upload a PDF/DOCX/PPTX file. Processing is asynchronous — poll the status endpoint.",
+                "operationId": "deceef8d8d4aacca555ddc27696dd688",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Chapter 3 Quiz"
+                                    },
+                                    "max_questions": {
+                                        "type": "integer",
+                                        "maximum": 20,
+                                        "minimum": 1,
+                                        "example": 5
+                                    },
+                                    "text": {
+                                        "description": "Raw text (required if no file)",
+                                        "type": "string",
+                                        "example": "Binary search is an efficient algorithm..."
+                                    },
+                                    "file": {
+                                        "description": "Upload PDF/DOCX/PPTX (required if no text)",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Quiz creation started",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Quiz creation started. Poll the status endpoint."
+                                        },
+                                        "quiz_id": {
+                                            "type": "integer",
+                                            "example": 7
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "pending"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/quiz/{id}": {
+            "get": {
+                "tags": [
+                    "5. Quiz"
+                ],
+                "summary": "Get quiz details",
+                "description": "Returns full quiz details with all questions and correct answers. Owner only.",
+                "operationId": "7f441290249d737b197daf4d79dcf862",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Quiz ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Quiz details with questions"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Quiz not found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/quiz/{id}/status": {
+            "get": {
+                "tags": [
+                    "5. Quiz"
+                ],
+                "summary": "Poll quiz generation status",
+                "description": "Poll this endpoint every 5 seconds after creating a quiz until status becomes 'done' or 'failed'.",
+                "operationId": "93cdd37727d75c1b80e867cd753bd36c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Quiz ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Current status",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "quiz_id": {
+                                            "type": "integer",
+                                            "example": 7
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "enum": [
+                                                "pending",
+                                                "processing",
+                                                "done",
+                                                "failed"
+                                            ],
+                                            "example": "done"
+                                        },
+                                        "error_message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "questions_count": {
+                                            "type": "integer",
+                                            "example": 5
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/quiz/{id}/toggle-share": {
+            "post": {
+                "tags": [
+                    "5. Quiz"
+                ],
+                "summary": "Toggle public share link",
+                "description": "Enable or disable the public shareable link for this quiz.",
+                "operationId": "d0e31b016fe0e79162c25c9c993e495f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Quiz ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Share status updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "is_public": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "share_url": {
+                                            "type": "string",
+                                            "example": "https://example.com/quiz/public/uuid"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Quiz is now public."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/quiz/{id}/attempt": {
+            "post": {
+                "tags": [
+                    "5. Quiz"
+                ],
+                "summary": "Submit a quiz attempt",
+                "description": "Submit answers for a quiz and receive the score immediately.",
+                "operationId": "9d4f33446080df05c8cc44ffb9f40aa6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Quiz ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "answers"
+                                ],
+                                "properties": {
+                                    "answers": {
+                                        "description": "Map of question_id to selected answer",
+                                        "type": "object",
+                                        "example": {
+                                            "1": "binary search",
+                                            "2": "datasets"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Score result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "score": {
+                                            "type": "integer",
+                                            "example": 4
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "example": 5
+                                        },
+                                        "percentage": {
+                                            "type": "integer",
+                                            "example": 80
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You scored 4 out of 5!"
+                                        },
+                                        "results": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "question_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "submitted_answer": {
+                                                        "type": "string",
+                                                        "example": "binary search"
+                                                    },
+                                                    "correct_answer": {
+                                                        "type": "string",
+                                                        "example": "binary search"
+                                                    },
+                                                    "is_correct": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/jobs": {
+            "get": {
+                "tags": [
+                    "5. Jobs"
+                ],
+                "summary": "List Recent Jobs",
+                "description": "Get a paginated list of recent background jobs for the authenticated user",
+                "operationId": "0bc3bf7e65276a33817feb8b27a7afcc",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of Jobs",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/jobs/{id}": {
+            "get": {
+                "tags": [
+                    "5. Jobs"
+                ],
+                "summary": "Check Job Status",
+                "description": "Get the status and results of a background job",
+                "operationId": "e127f38c2ea2aaafc91d4399b40201f6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Job ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Job Details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "enum": [
+                                                "pending",
+                                                "running",
+                                                "succeeded",
+                                                "failed"
+                                            ],
+                                            "example": "succeeded"
+                                        },
+                                        "results": {
+                                            "type": "object"
+                                        },
+                                        "error_message": {
+                                            "type": "string",
+                                            "nullable": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Job not found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/user": {
+            "get": {
+                "tags": [
+                    "V1 User"
+                ],
+                "summary": "Get User Info",
+                "operationId": "8d11e10a249849c3fd83d513350c8211",
+                "responses": {
+                    "200": {
+                        "description": "User Details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "V1 User"
+                ],
+                "summary": "Update User Settings",
+                "operationId": "c4b88abfb1624e324e4f11f972715fd4",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "whatsapp_number": {
+                                        "type": "string"
+                                    },
+                                    "country_code": {
+                                        "type": "string"
+                                    },
+                                    "country_name": {
+                                        "type": "string"
+                                    },
+                                    "avatar": {
+                                        "description": "User avatar image",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/tools/video-explainer": {
+            "post": {
+                "tags": [
+                    "4. Tools"
+                ],
+                "summary": "Generate Video Explainer",
+                "description": "Starts a background job to generate a video explainer MP4. Poll GET /api/v1/jobs/{job_id} for status.",
+                "operationId": "2547f1af61b7b3ac47857cb82ac5ab6b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "topic"
+                                ],
+                                "properties": {
+                                    "session_id": {
+                                        "description": "Existing session ID. Auto-created if omitted.",
+                                        "type": "integer",
+                                        "nullable": true
+                                    },
+                                    "topic": {
+                                        "type": "string",
+                                        "maxLength": 500,
+                                        "example": "The Solar System"
+                                    },
+                                    "style": {
+                                        "type": "string",
+                                        "example": "Modern",
+                                        "nullable": true
+                                    },
+                                    "slide_count": {
+                                        "type": "integer",
+                                        "maximum": 20,
+                                        "minimum": 1,
+                                        "example": 5,
+                                        "nullable": true
+                                    },
+                                    "instructions": {
+                                        "type": "string",
+                                        "example": "Keep it simple for kids",
+                                        "nullable": true
+                                    },
+                                    "language": {
+                                        "type": "string",
+                                        "example": "ar",
+                                        "nullable": true
+                                    },
+                                    "enable_captions": {
+                                        "type": "boolean",
+                                        "example": true,
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Job Accepted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Video explainer generation started."
+                                        },
+                                        "job_id": {
+                                            "description": "Use this ID with GET /api/v1/jobs/{job_id} to poll status",
+                                            "type": "integer"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "queued"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "402": {
+                        "description": "Insufficient credits"
+                    },
+                    "422": {
+                        "description": "Validation Error"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "Login with email and password to get the authentication token",
+                "name": "Token based Based",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            },
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Session Cookie Authentication",
+                "name": "laravel_session",
+                "in": "cookie"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "4. Tools",
+            "description": "AI Generation Tools"
+        },
+        {
+            "name": "7. Guest Tools",
+            "description": "Public AI tools for unauthenticated users (rate-limited by IP)"
+        },
+        {
+            "name": "6. Public Quiz",
+            "description": "Public quiz access (no authentication required)"
+        },
+        {
+            "name": "5. Quiz",
+            "description": "AI-powered Quiz generation and management"
+        },
+        {
+            "name": "5. Jobs",
+            "description": "Background Job Status"
+        },
+        {
+            "name": "1. Auth",
+            "description": "Authentication & CSRF"
+        },
+        {
+            "name": "V1 Chat Sessions",
+            "description": "V1 Chat Sessions"
+        },
+        {
+            "name": "V1 User",
+            "description": "V1 User"
+        }
+    ]
+}
