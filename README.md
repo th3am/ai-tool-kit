@@ -8,8 +8,6 @@ Demo videos and project materials:
 
 [Google Drive Demo](https://drive.google.com/drive/folders/1-JbfIvR9Nb1M_k3tjc9oUAyOHG2T3syi?usp=drive_link)
 
-> Note: replace this link with the Google Drive demo videos link if the videos are stored separately.
-
 ## Repository Structure
 
 ```text
