@@ -6,7 +6,7 @@ AI Tool Kit is a graduation project for an AI-powered education platform. The pr
 
 Demo videos and project materials:
 
-[th3am/ai-tool-kit](https://github.com/th3am/ai-tool-kit)
+[Google Drive Demo](https://drive.google.com/drive/folders/1-JbfIvR9Nb1M_k3tjc9oUAyOHG2T3syi?usp=drive_link)
 
 > Note: replace this link with the Google Drive demo videos link if the videos are stored separately.
 
@@ -43,10 +43,6 @@ The `Website/` folder contains the main Laravel application. It includes the web
 
 Important areas:
 
-- `Website/app/Http/Controllers/Api/V1/` - API controllers for mobile app and external access.
-- `Website/app/Services/Ai/` - AI generation services.
-- `Website/app/Services/Whatsapp/` - WhatsApp intent detection and messaging integration.
-- `Website/app/Jobs/` - async generation jobs.
 - `Website/resources/views/` - web and dashboard views.
 - `Website/routes/api.php` - API routes.
 - `Website/routes/web.php` - web routes.
@@ -69,13 +65,6 @@ Generated APK/AAB files are intentionally not included in the repository. Releas
 The `AI/` folder contains AI-related service code copied from the backend for project review, documentation, and presentation. The runtime version of these services still exists inside `Website/app/Services`.
 
 Included AI services cover:
-
-- Chat and prompt routing
-- Presentation generation
-- Mind map generation
-- Video explainer generation
-- Animation generation
-- Text-to-speech providers
 - Quiz and question generation
 
 ## WhatsApp Agent
@@ -119,32 +108,23 @@ Key files:
 
 ## Technology Stack
 
+- PHP
 - Laravel
 - Laravel Sanctum
 - Livewire
 - NativePHP Mobile
+- MySQL
+- SQLite
+- Kotlin
 - Alpine.js
 - Tailwind CSS
-- MySQL
 - OpenAI-compatible AI API integration
 - WhatsApp messaging API integration
 - Android build tooling
 
 ## Security Notes
 
-The repository excludes sensitive and generated files:
-
-- `.env`
-- API keys
-- WhatsApp sender credentials
-- Android signing keys
-- APK/AAB builds
-- `vendor/`
-- `node_modules/`
-- cache files
-- logs
-
-Use `.env.example` files as templates for local configuration.
+The repository excludes sensitive and generated files
 
 ## Project Status
 
