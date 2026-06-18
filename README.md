@@ -23,6 +23,20 @@ ai-tool-kit/
 
 EduAI helps users create educational content quickly using AI. Users can generate presentations, quizzes, mind maps, audio narrations, video explainers, and simple educational animations. The platform supports both web and mobile experiences, with WhatsApp automation for fast access through chat.
 
+## Team Members
+
+| Name | Role |
+| --- | --- |
+| Abdulrahman Mohamed Eid Ali | Team Leader, Fullstack |
+| Mayada Mohamed Abdel-Qader Mohamed | AI |
+| Mohab Nasser Ahmed Ali | AI |
+| Alaa Ahmed Ramadan Ahmed | AI |
+| Asmaa Ayman Fathy Abdel-Moneim | Frontend |
+| Abdulrahman Aboubakr Mahmoud Mohamed | Not specified |
+| Omar Mohamed Hanafy Mohamed | UI & UX |
+| Sara Mahmoud Ahmed Ramadan | Frontend |
+| Rawda Gomaa El-Sayed Ahmed | Frontend |
+
 ## Main Features
 
 - AI presentation generation
