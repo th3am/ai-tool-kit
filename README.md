@@ -32,7 +32,7 @@ EduAI helps users create educational content quickly using AI. Users can generat
 | Mohab Nasser Ahmed Ali | AI |
 | Alaa Ahmed Ramadan Ahmed | AI |
 | Asmaa Ayman Fathy Abdel-Moneim | Frontend |
-| Abdulrahman Aboubakr Mahmoud Mohamed | Not specified |
+| Abdulrahman Aboubakr Mahmoud Mohamed | Database |
 | Omar Mohamed Hanafy Mohamed | UI & UX |
 | Sara Mahmoud Ahmed Ramadan | Frontend |
 | Rawda Gomaa El-Sayed Ahmed | Frontend |
